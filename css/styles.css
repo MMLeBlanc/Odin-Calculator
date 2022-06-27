@@ -5,6 +5,10 @@ body {
     justify-content: center;
 }
 
+.title {
+    text-align: center;
+}
+
 .calculator {
     display: flex;
     flex-direction: column;
@@ -14,7 +18,7 @@ body {
     width: 75vw;
 }
 
-.display {
+#display {
     background-color: lightgrey;
     text-align: center;
     border-width: 3px;
@@ -26,13 +30,13 @@ body {
 
 .operations {
     display: flex;
-    justify-content: center;
-    gap: 5vw;
+    justify-content: space-around;
+    gap: 5px;
     width: inherit;
 }
 
 .operator {
-    width: 10vw;
+    flex: 1 1 auto;
 }
 
 .operatorText {
@@ -49,10 +53,14 @@ body {
 .row {
     width: inherit;
     display: flex;
-    justify-content: space-between;
+    justify-content: space-around;
     padding: 3%;
+    gap: 5px;
 }
 
+.number {
+    flex: 1 1 auto;
+}
 
 .zero {
     width: inherit;

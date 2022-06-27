@@ -55,3 +55,45 @@ function Operate(operator, num1, num2) {
             return Divide(num1, num2);
     }
 }
+
+// Select buttons and add listeners, as well as set up main number
+let operand1 = 0;
+let operand2;
+let operator = null;
+
+const displayValue = document.getElementById('display');
+const numButton = document.getElementsByClassName('number');
+const operationButton = document.getElementsByClassName('operator');
+
+for (let i = 0; i < numButton.length; i++) {
+    numButton[i].addEventListener('click', e => {
+        if (operand1 === 0) {
+            displayValue.innerText = e.target.innerText;
+            operand1 = parseFloat(displayValue.innerText);
+        } else {
+            operand1 = (parseFloat(displayValue.innerText) * 10) + parseFloat(e.target.innerText);
+            displayValue.innerText += e.target.innerText;
+        }
+    });
+}
+
+for (let j = 0; j < operationButton.length; j++) {
+    operationButton[j].addEventListener('click', e => {
+
+        if (e.target.innerText === '=' || operator !== null) {
+            displayValue.innerText = Operate(operator, operand2, operand1);
+            operand2 = displayValue.innerText;
+            operand1 = 0;
+            operator = e.target.innerText;
+        } else if (e.target.innerText === 'C') {
+            operand1 = 0;
+            operand2 = 0;
+            operator = null;
+            displayValue.innerText = 0;
+        } else {
+            operator = e.target.innerText;
+            operand2 = operand1;
+            operand1 = 0;
+        }
+    });
+}
