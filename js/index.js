@@ -58,18 +58,27 @@ function Operate(operator, num1, num2) {
 
 // Select buttons and add listeners, as well as set up main number
 let operand1 = 0;
-let operand2;
+let operand2 = 0;
 let operator = null;
+let decimalInd = false;
 
 const displayValue = document.getElementById('display');
 const numButton = document.getElementsByClassName('number');
 const operationButton = document.getElementsByClassName('operator');
+const decimal = document.querySelector('.decimal');
 
+
+// For loop to add event listerners to the number buttons
 for (let i = 0; i < numButton.length; i++) {
     numButton[i].addEventListener('click', e => {
         if (operand1 === 0) {
             displayValue.innerText = e.target.innerText;
             operand1 = parseFloat(displayValue.innerText);
+        } else if (e.target.innerText === '.') {
+            displayValue.innerText = operand1.toString() + e.target.innerText;
+            decimalInd = true;
+            console.log(operand1);
+            decimal.setAttribute('disabled', '');
         } else {
             operand1 = (parseFloat(displayValue.innerText) * 10) + parseFloat(e.target.innerText);
             displayValue.innerText += e.target.innerText;
@@ -79,21 +88,37 @@ for (let i = 0; i < numButton.length; i++) {
 
 for (let j = 0; j < operationButton.length; j++) {
     operationButton[j].addEventListener('click', e => {
-
-        if (e.target.innerText === '=' || operator !== null) {
-            displayValue.innerText = Operate(operator, operand2, operand1);
-            operand2 = displayValue.innerText;
-            operand1 = 0;
-            operator = e.target.innerText;
+        if (operator !== null && operator !== 'C') {
+            if (e.target.innerText === '=') {
+                displayValue.innerText = Operate(operator, operand2, operand1);
+                operator = null;
+                operand2 = parseFloat(displayValue.innerText);
+                operand1 = 0;
+            } else {
+                displayValue.innerText = Operate(operator, operand2, operand1);
+                operand2 = parseFloat(displayValue.innerText);
+                operand1 = 0;
+                operator = e.target.innerText;
+            }
         } else if (e.target.innerText === 'C') {
-            operand1 = 0;
-            operand2 = 0;
-            operator = null;
-            displayValue.innerText = 0;
+            resetValues();
         } else {
+            operand1 = parseFloat(displayValue.innerText);
             operator = e.target.innerText;
             operand2 = operand1;
+            if (decimalInd === true) {
+                decimalInd = false;
+                decimal.removeAttribute('disabled');
+            }
             operand1 = 0;
         }
     });
+}
+
+function resetValues() {
+    operand1 = 0;
+    operand2 = 0;
+    operator = null;
+    displayValue.innerText = '0';
+    decimalInd = false;
 }
