@@ -77,7 +77,6 @@ for (let i = 0; i < numButton.length; i++) {
         } else if (e.target.innerText === '.') {
             displayValue.innerText = operand1.toString() + e.target.innerText;
             decimalInd = true;
-            console.log(operand1);
             decimal.setAttribute('disabled', '');
         } else {
             operand1 = (parseFloat(displayValue.innerText) * 10) + parseFloat(e.target.innerText);
@@ -90,6 +89,7 @@ for (let j = 0; j < operationButton.length; j++) {
     operationButton[j].addEventListener('click', e => {
         if (operator !== null && operator !== 'C') {
             if (e.target.innerText === '=') {
+                operand1 = parseFloat(displayValue.innerText);
                 displayValue.innerText = Operate(operator, operand2, operand1);
                 operator = null;
                 operand2 = parseFloat(displayValue.innerText);
@@ -106,10 +106,8 @@ for (let j = 0; j < operationButton.length; j++) {
             operand1 = parseFloat(displayValue.innerText);
             operator = e.target.innerText;
             operand2 = operand1;
-            if (decimalInd === true) {
-                decimalInd = false;
-                decimal.removeAttribute('disabled');
-            }
+            decimalInd = false;
+            decimal.removeAttribute('disabled');
             operand1 = 0;
         }
     });
@@ -121,4 +119,5 @@ function resetValues() {
     operator = null;
     displayValue.innerText = '0';
     decimalInd = false;
+    decimal.removeAttribute('disabled');
 }
