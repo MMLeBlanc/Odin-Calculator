@@ -85,6 +85,7 @@ for (let i = 0; i < numButton.length; i++) {
     });
 }
 
+// For loop to determine what to display and call operate and clear functions
 for (let j = 0; j < operationButton.length; j++) {
     operationButton[j].addEventListener('click', e => {
         if (operator !== null && operator !== 'C') {
@@ -95,10 +96,12 @@ for (let j = 0; j < operationButton.length; j++) {
                 operand2 = parseFloat(displayValue.innerText);
                 operand1 = 0;
             } else {
+                operand1 = parseFloat(displayValue.innerText);
                 displayValue.innerText = Operate(operator, operand2, operand1);
                 operand2 = parseFloat(displayValue.innerText);
                 operand1 = 0;
                 operator = e.target.innerText;
+                toggleDecimal();
             }
         } else if (e.target.innerText === 'C') {
             resetValues();
@@ -106,8 +109,7 @@ for (let j = 0; j < operationButton.length; j++) {
             operand1 = parseFloat(displayValue.innerText);
             operator = e.target.innerText;
             operand2 = operand1;
-            decimalInd = false;
-            decimal.removeAttribute('disabled');
+            toggleDecimal();
             operand1 = 0;
         }
     });
@@ -118,6 +120,10 @@ function resetValues() {
     operand2 = 0;
     operator = null;
     displayValue.innerText = '0';
+    toggleDecimal();
+}
+
+function toggleDecimal() {
     decimalInd = false;
     decimal.removeAttribute('disabled');
 }
