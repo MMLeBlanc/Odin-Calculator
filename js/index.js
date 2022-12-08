@@ -88,7 +88,7 @@ for (let i = 0; i < numButton.length; i++) {
 // For loop to determine what to display and call operate and clear functions
 for (let j = 0; j < operationButton.length; j++) {
     operationButton[j].addEventListener('click', e => {
-        if (operator !== null && operator !== 'C') {
+        if (operator !== null && e.target.innerText !== 'C') {
             if (e.target.innerText === '=') {
                 operand1 = parseFloat(displayValue.innerText);
                 displayValue.innerText = Operate(operator, operand2, operand1);
