@@ -40,6 +40,7 @@ body {
 
 .operator {
     flex: 1 1 auto;
+    background-color: darkgrey;
 }
 
 .operatorText {
